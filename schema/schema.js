@@ -140,6 +140,7 @@ const Mutation = new GraphQLObjectType({
       type: TaskType,
       args: {
         id: { type: new GraphQLNonNull(GraphQLID)},
+        title: {type: GraphQLString},
         isDone: { type: GraphQLBoolean },
         todolistId: { type: GraphQLID },
       },
@@ -200,10 +201,18 @@ const Query = new GraphQLObjectType({
     tasksByTodolistId: {
       type: new GraphQLList(TaskType),
       args: {
-        id: {type: GraphQLID}
+        id: {type: GraphQLID},
+        filter: {type: GraphQLString }
       },
       resolve(parent, args) {
-        return Task.find({todolistId: args.id}) // .find({isDone: false})
+        let taskForTodoList = Task.find({todolistId: args.id}) 
+        if(args.filter === "complited") {
+          taskForTodoList.find({isDone: false})
+        }
+        if(args.filter === "active") {
+          taskForTodoList.find({isDone: true})
+        }
+        return taskForTodoList
       }
     }
   },
