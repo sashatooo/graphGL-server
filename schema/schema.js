@@ -125,8 +125,8 @@ const Mutation = new GraphQLObjectType({
       type: TodolistType,
       args: {
         id: { type: GraphQLID },
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        filter: { type: new GraphQLNonNull(GraphQLString) },
+        title: { type: GraphQLString },
+        filter: { type: GraphQLString },
       },
       resolve(parent, args) {
         return Todolist.findByIdAndUpdate(
@@ -139,9 +139,9 @@ const Mutation = new GraphQLObjectType({
     updateTask: {
       type: TaskType,
       args: {
-        id: { type: GraphQLID },
-        isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
-        todolistId: { type: new GraphQLNonNull(GraphQLID) },
+        id: { type: new GraphQLNonNull(GraphQLID)},
+        isDone: { type: GraphQLBoolean },
+        todolistId: { type: GraphQLID },
       },
       resolve(parent, args) {
         return Task.findByIdAndUpdate(
@@ -197,6 +197,15 @@ const Query = new GraphQLObjectType({
         return Task.find({});
       },
     },
+    tasksByTodolistId: {
+      type: new GraphQLList(TaskType),
+      args: {
+        id: {type: GraphQLID}
+      },
+      resolve(parent, args) {
+        return Task.find({todolistId: args.id}) // .find({isDone: false})
+      }
+    }
   },
 });
 
