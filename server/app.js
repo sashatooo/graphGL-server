@@ -8,7 +8,9 @@ const cors = require('cors')
 const app = express();
 const PORT = 3055;
 
-mongoose.connect('mongodb://localhost:27017/todos'); 
+// mongoose.connect('mongodb://localhost:27017/todos'); 
+mongoose.connect('mongodb://sasha:1234567890123456@SG-todos-60641.servers.mongodirector.com:27017/todos'); 
+
 app.use(cors())
 app.use(
   "/graphql",

@@ -80,13 +80,12 @@ const Mutation = new GraphQLObjectType({
     addTodolist: {
       type: TodolistType,
       args: {
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        filter: { type: new GraphQLNonNull(GraphQLString) },
+        title: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
         const todolist = new Todolist({
           title: args.title,
-          filter: args.filter,
+          filter: "all",
         });
         return todolist.save();
       },
