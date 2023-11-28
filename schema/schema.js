@@ -141,7 +141,7 @@ const Mutation = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLID)},
         title: {type: new GraphQLNonNull(GraphQLString)},
         isDone: { type: new GraphQLNonNull(GraphQLBoolean) },
-        todolistId: { type: new GraphQLNonNull(GraphQLID) },
+        todolistId: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
         return Task.findByIdAndUpdate(
